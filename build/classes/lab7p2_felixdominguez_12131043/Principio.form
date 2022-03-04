@@ -102,7 +102,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="jDialog1">
+    <Container class="javax.swing.JDialog" name="TablaPosiciones">
 
       <Layout>
         <DimensionLayout dim="0">

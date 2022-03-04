@@ -49,7 +49,7 @@ public class Principio extends javax.swing.JFrame {
         Puntos1 = new javax.swing.JLabel();
         Puntos2 = new javax.swing.JLabel();
         BotonSimular = new javax.swing.JButton();
-        jDialog1 = new javax.swing.JDialog();
+        TablaPosiciones = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         Posiciones = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -142,18 +142,18 @@ public class Principio extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Posiciones);
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+        javax.swing.GroupLayout TablaPosicionesLayout = new javax.swing.GroupLayout(TablaPosiciones.getContentPane());
+        TablaPosiciones.getContentPane().setLayout(TablaPosicionesLayout);
+        TablaPosicionesLayout.setHorizontalGroup(
+            TablaPosicionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TablaPosicionesLayout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDialog1Layout.createSequentialGroup()
+        TablaPosicionesLayout.setVerticalGroup(
+            TablaPosicionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TablaPosicionesLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -281,6 +281,26 @@ public class Principio extends javax.swing.JFrame {
 
     private void TablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TablaActionPerformed
         // TODO add your handling code here:
+        ordenar();
+        Posiciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Equipo", "PJ", "PG", "PE", "PP", "GF", "GC", "DG", "Puntos"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(Posiciones);
+
         for(int i=0;i<equipos.size();i++){
             Object[] fila={
                 equipos.get(i).getNombre(),
@@ -296,7 +316,9 @@ public class Principio extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) Posiciones.getModel();
             model.addRow(fila);
             Posiciones.setModel(model);
-        }    
+        }
+        TablaPosiciones.setVisible(rootPaneCheckingEnabled);
+        TablaPosiciones.pack();
     }//GEN-LAST:event_TablaActionPerformed
 
     private void BotonSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSimularActionPerformed
@@ -367,6 +389,23 @@ public class Principio extends javax.swing.JFrame {
         bw.close();
         fw.close();
     }
+    
+    public void ordenar(){
+        for (int i = 0; i < equipos.size() - 1; i++) {
+            for (int j = i + 1; j < equipos.size(); j++) {
+                System.out.println();
+                if (equipos.get(i).getPuntos() < equipos.get(j).getPuntos()) {
+                    Equipo temp=equipos.get(i);
+                    equipos.set(i,equipos.get(j));
+                    equipos.set(j, temp);
+                    /*int temporal = arreglo[i];
+                    arreglo[i] = arreglo[j];
+                    arreglo[j] = temporal;*/
+                }
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -422,7 +461,7 @@ public class Principio extends javax.swing.JFrame {
     private javax.swing.JMenuItem Simulacion;
     private javax.swing.JDialog Simular;
     private javax.swing.JMenuItem Tabla;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog TablaPosiciones;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
