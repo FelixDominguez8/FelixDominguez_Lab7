@@ -252,10 +252,20 @@ public class Principio extends javax.swing.JFrame {
 
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
         // TODO add your handling code here:
+        int pos=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la posicion del equipo"));
+        String nombre=(JOptionPane.showInputDialog("Ingrese el nuevo nombre del equipo"));
+        equipos.get(pos).setNombre(nombre);
+        try {
+            archivos();
+        } catch (IOException ex) {
+            System.out.println("Ha ocurrido un error fatal");
+        }
     }//GEN-LAST:event_ModificarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         // TODO add your handling code here:
+        int pos=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nombre del equipo"));
+        equipos.remove(pos);
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void CargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarActionPerformed
