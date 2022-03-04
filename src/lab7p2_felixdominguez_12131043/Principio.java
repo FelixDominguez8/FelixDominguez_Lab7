@@ -6,7 +6,9 @@
 package lab7p2_felixdominguez_12131043;
 
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import java.util.Random;
 
 /**
  *
@@ -14,12 +16,21 @@ import javax.swing.JOptionPane;
  */
 public class Principio extends javax.swing.JFrame {
     ArrayList<Equipo> equipos=new ArrayList();
+    Random r=new Random();
 
     /**
      * Creates new form Principio
      */
     public Principio() {
         initComponents();
+        
+        DefaultComboBoxModel<String> equipobox=new DefaultComboBoxModel ();
+        for(int i=0;i<equipos.size();i++){
+            equipobox.addElement(equipos.get(i).getNombre());
+        }
+        Equipo1.setModel(equipobox);
+        Equipo2.setModel(equipobox);
+        
     }
 
     /**
@@ -31,6 +42,12 @@ public class Principio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Simular = new javax.swing.JDialog();
+        Equipo1 = new javax.swing.JComboBox<>();
+        Equipo2 = new javax.swing.JComboBox<>();
+        Puntos1 = new javax.swing.JLabel();
+        Puntos2 = new javax.swing.JLabel();
+        BotonSimular = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Crear = new javax.swing.JMenuItem();
@@ -44,6 +61,59 @@ public class Principio extends javax.swing.JFrame {
         Simulacion = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         Tabla = new javax.swing.JMenuItem();
+
+        Equipo1.setMinimumSize(new java.awt.Dimension(100, 22));
+
+        Equipo2.setMinimumSize(new java.awt.Dimension(100, 22));
+
+        Puntos1.setText("0");
+
+        Puntos2.setText("0");
+
+        BotonSimular.setText("Simular");
+
+        javax.swing.GroupLayout SimularLayout = new javax.swing.GroupLayout(Simular.getContentPane());
+        Simular.getContentPane().setLayout(SimularLayout);
+        SimularLayout.setHorizontalGroup(
+            SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SimularLayout.createSequentialGroup()
+                .addGroup(SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(SimularLayout.createSequentialGroup()
+                        .addGroup(SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SimularLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(Equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(SimularLayout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(Puntos1)))
+                        .addGroup(SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(SimularLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(Equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SimularLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Puntos2)
+                                .addGap(33, 33, 33))))
+                    .addGroup(SimularLayout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(BotonSimular)))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        SimularLayout.setVerticalGroup(
+            SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SimularLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(SimularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Puntos1)
+                    .addComponent(Puntos2))
+                .addGap(39, 39, 39)
+                .addComponent(BotonSimular)
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,12 +213,37 @@ public class Principio extends javax.swing.JFrame {
 
     private void SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulacionActionPerformed
         // TODO add your handling code here:
+        Simular.setVisible(rootPaneCheckingEnabled);
+        Simular.pack();
     }//GEN-LAST:event_SimulacionActionPerformed
 
     private void TablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TablaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TablaActionPerformed
 
+    public void SimularPartido(Equipo e1, Equipo e2){
+         int gol1=0+r.nextInt(5);
+         int gol2=0+r.nextInt(5);
+         e1.setFavor(e1.getFavor()+gol1);
+         e2.setFavor(e2.getFavor()+gol2);
+         e1.setContra(e1.getContra()+gol2);
+         e2.setContra(e2.getContra()+gol1);
+         if(e1.getFavor()>e2.getFavor()){
+             e1.setPuntos(e1.getPuntos()+3);
+             e1.setGanados(e1.getGanados()+1);
+             e2.setPerdidos(e2.getPerdidos()+1);
+         }else if(e2.getFavor()>e1.getFavor()){
+             e2.setPuntos(e2.getPuntos()+3);
+             e2.setGanados(e2.getGanados()+1);
+             e1.setPerdidos(e1.getPerdidos()+1);
+         }else if(e1.getFavor()==e2.getFavor()){
+             e1.setPuntos(e1.getPuntos()+1);
+             e2.setPuntos(e2.getPuntos()+1);
+             e1.setEmpatados(e1.getEmpatados()+1);
+             e2.setEmpatados(e2.getEmpatados()+1);
+         }
+         
+    }
     /**
      * @param args the command line arguments
      */
@@ -185,11 +280,17 @@ public class Principio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonSimular;
     private javax.swing.JMenuItem Cargar;
     private javax.swing.JMenuItem Crear;
     private javax.swing.JMenuItem Eliminar;
+    private javax.swing.JComboBox<String> Equipo1;
+    private javax.swing.JComboBox<String> Equipo2;
     private javax.swing.JMenuItem Modificar;
+    private javax.swing.JLabel Puntos1;
+    private javax.swing.JLabel Puntos2;
     private javax.swing.JMenuItem Simulacion;
+    private javax.swing.JDialog Simular;
     private javax.swing.JMenuItem Tabla;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

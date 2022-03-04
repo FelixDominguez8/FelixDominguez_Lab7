@@ -11,13 +11,13 @@ package lab7p2_felixdominguez_12131043;
  */
 public class Equipo {
     private String nombre;
-    private int ganados;
-    private int empatados;
-    private int perdidos;
-    private int favor;
-    private int contra;
-    private int diferencia;
-    private int puntos;
+    private int ganados=0;
+    private int empatados=0;
+    private int perdidos=0;
+    private int favor=0;
+    private int contra=0;
+    private int diferencia=0;
+    private int puntos=0;
 
     public Equipo() {
     }
