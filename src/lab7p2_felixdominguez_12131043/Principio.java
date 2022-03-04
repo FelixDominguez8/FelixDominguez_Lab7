@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,9 +39,12 @@ public class Principio extends javax.swing.JFrame {
             equipobox.addElement(equipos.get(i).getNombre());
         }
         Equipo1.setModel(equipobox);
-        Equipo2.setModel(equipobox);
-        //Equipo1.setSelectedItem(0);
-        //Equipo2.setSelectedItem(0);
+        
+        DefaultComboBoxModel<String> equipobox2=new DefaultComboBoxModel ();
+        for(int i=0;i<equipos.size();i++){
+            equipobox2.addElement(equipos.get(i).getNombre());
+        }
+        Equipo2.setModel(equipobox2);
         
     }
 
@@ -81,6 +86,11 @@ public class Principio extends javax.swing.JFrame {
         Puntos2.setText("0");
 
         BotonSimular.setText("Simular");
+        BotonSimular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonSimularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout SimularLayout = new javax.swing.GroupLayout(Simular.getContentPane());
         Simular.getContentPane().setLayout(SimularLayout);
@@ -208,20 +218,9 @@ public class Principio extends javax.swing.JFrame {
         String nombre=(JOptionPane.showInputDialog("Ingrese el nombre del equipo"));
         Equipo equi= new Equipo(nombre);
         equipos.add(equi);
-        File archivo=null;
-        FileWriter fw=null;
-        BufferedWriter bw=null;
-        try{
-            archivo=new File("./Equipos.txt");
-            fw=new FileWriter(archivo,true);
-            bw=new BufferedWriter(fw);
-            bw.write(equi.getNombre()+",");
-            bw.newLine();
-            bw.flush();
-            bw.close();
-            fw.close();
-        }
-        catch(Exception e){
+        try {
+            archivos();
+        } catch (IOException ex) {
             System.out.println("Ha ocurrido un error fatal");
         }
         
@@ -243,63 +242,79 @@ public class Principio extends javax.swing.JFrame {
         // TODO add your handling code here:
         Simular.setVisible(rootPaneCheckingEnabled);
         Simular.pack();
-        SimularPartido(equipos.get(Equipo1.getSelectedIndex()),equipos.get(Equipo2.getSelectedIndex()));
-        
     }//GEN-LAST:event_SimulacionActionPerformed
 
     private void TablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TablaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TablaActionPerformed
 
+    private void BotonSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSimularActionPerformed
+        // TODO add your handling code here:
+        if(equipos.get(Equipo1.getSelectedIndex())==equipos.get(Equipo2.getSelectedIndex())){
+            
+        }else{
+            SimularPartido(equipos.get(Equipo1.getSelectedIndex()),equipos.get(Equipo2.getSelectedIndex()));
+            try {
+                archivos();
+            } catch (IOException ex) {
+                System.out.println("Ha ocurrido un error fatal");
+            }
+        }
+    }//GEN-LAST:event_BotonSimularActionPerformed
+
     public void SimularPartido(Equipo e1, Equipo e2){
-         int gol1=0+r.nextInt(5);
-         int gol2=0+r.nextInt(5);
-         e1.setFavor(e1.getFavor()+gol1);
-         e2.setFavor(e2.getFavor()+gol2);
-         e1.setContra(e1.getContra()+gol2);
-         e2.setContra(e2.getContra()+gol1);
-         if(e1.getFavor()>e2.getFavor()){
-             e1.setPuntos(e1.getPuntos()+3);
-             e1.setGanados(e1.getGanados()+1);
-             e2.setPerdidos(e2.getPerdidos()+1);
-         }else if(e2.getFavor()>e1.getFavor()){
-             e2.setPuntos(e2.getPuntos()+3);
-             e2.setGanados(e2.getGanados()+1);
-             e1.setPerdidos(e1.getPerdidos()+1);
-         }else if(e1.getFavor()==e2.getFavor()){
-             e1.setPuntos(e1.getPuntos()+1);
-             e2.setPuntos(e2.getPuntos()+1);
-             e1.setEmpatados(e1.getEmpatados()+1);
-             e2.setEmpatados(e2.getEmpatados()+1);
-         }
-         e1.setDiferencia(e1.getDiferencia()+(gol1-gol2));
-         e2.setDiferencia(e2.getDiferencia()+(gol2-gol1));
-         String p1=String.valueOf(gol1);
-         String p2=String.valueOf(gol2);
-         Puntos1.setText(p1);
-         Puntos2.setText(p2);
+        e1.setJugados(e1.getJugados()+1);
+        e2.setJugados(e2.getJugados()+1);
+        int gol1=0+r.nextInt(5);
+        int gol2=0+r.nextInt(5);
+        e1.setFavor(e1.getFavor()+gol1);
+        e2.setFavor(e2.getFavor()+gol2);
+        e1.setContra(e1.getContra()+gol2);
+        e2.setContra(e2.getContra()+gol1);
+        if(e1.getFavor()>e2.getFavor()){
+            e1.setPuntos(e1.getPuntos()+3);
+            e1.setGanados(e1.getGanados()+1);
+            e2.setPerdidos(e2.getPerdidos()+1);
+        }else if(e2.getFavor()>e1.getFavor()){
+            e2.setPuntos(e2.getPuntos()+3);
+            e2.setGanados(e2.getGanados()+1);
+            e1.setPerdidos(e1.getPerdidos()+1);
+        }else if(e1.getFavor()==e2.getFavor()){
+            e1.setPuntos(e1.getPuntos()+1);
+            e2.setPuntos(e2.getPuntos()+1);
+            e1.setEmpatados(e1.getEmpatados()+1);
+            e2.setEmpatados(e2.getEmpatados()+1);
+        }
+        e1.setDiferencia(e1.getDiferencia()+(gol1-gol2));
+        e2.setDiferencia(e2.getDiferencia()+(gol2-gol1));
+        String p1=String.valueOf(gol1);
+        String p2=String.valueOf(gol2);
+        Puntos1.setText(p1);
+        Puntos2.setText(p2);
     }
     
     public void archivos() throws IOException{
         File archivo=null;
         FileWriter fw=null;
         BufferedWriter bw=null;
+        String s="";
         for(int i=0;i<equipos.size();i++){
-            try{
-                archivo=new File("./Equipos.txt");
-                fw=new FileWriter(archivo,true);
-                bw=new BufferedWriter(fw);
-                bw.write(equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+",");
-                bw.newLine();
-                bw.flush();
+            s=s+equipos.get(i).toString()+"\n";
+        } 
+        try{
+            archivo=new File("./Equipos.txt");
+            fw=new FileWriter(archivo);
+            bw=new BufferedWriter(fw);
+            bw.write(s);
+            bw.newLine();
+            bw.flush();
 
-            }
-            catch(Exception e){
-                System.out.println("Ha ocurrido un error fatal");
-            }
-            bw.close();
-            fw.close();
-        }    
+        }
+        catch(Exception e){
+            System.out.println("Ha ocurrido un error fatal");
+        }
+        bw.close();
+        fw.close();
     }
     /**
      * @param args the command line arguments
@@ -307,6 +322,7 @@ public class Principio extends javax.swing.JFrame {
     public static void main(String args[]) {
         
         equipos.add(new Equipo("Hola"));
+        equipos.add(new Equipo("Adios"));
         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

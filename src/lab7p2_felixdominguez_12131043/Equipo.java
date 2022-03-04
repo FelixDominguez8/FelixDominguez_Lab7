@@ -10,8 +10,8 @@ package lab7p2_felixdominguez_12131043;
  * @author Lenovo I7
  */
 public class Equipo {
-    private String nombre;
-    private int jugados;
+    private String nombre=" ";
+    private int jugados=0;
     private int ganados=0;
     private int empatados=0;
     private int perdidos=0;
