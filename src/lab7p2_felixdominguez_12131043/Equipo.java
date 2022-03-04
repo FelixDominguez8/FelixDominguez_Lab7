@@ -11,6 +11,7 @@ package lab7p2_felixdominguez_12131043;
  */
 public class Equipo {
     private String nombre;
+    private int jugados;
     private int ganados=0;
     private int empatados=0;
     private int perdidos=0;
@@ -26,8 +27,9 @@ public class Equipo {
         this.nombre = nombre;
     }
 
-    public Equipo(String nombre, int ganados, int empatados, int perdidos, int favor, int contra, int diferencia, int puntos) {
+    public Equipo(String nombre, int jugados,int ganados, int empatados, int perdidos, int favor, int contra, int diferencia, int puntos) {
         this.nombre = nombre;
+        this.jugados = jugados;
         this.ganados = ganados;
         this.empatados = empatados;
         this.perdidos = perdidos;
@@ -43,6 +45,14 @@ public class Equipo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getJugados() {
+        return jugados;
+    }
+
+    public void setJugados(int jugados) {
+        this.jugados = jugados;
     }
 
     public int getGanados() {
@@ -103,7 +113,7 @@ public class Equipo {
 
     @Override
     public String toString() {
-        return "nombre=" + nombre + ", ganados=" + ganados + ", empatados=" + empatados + ", perdidos=" + perdidos + ", favor=" + favor + ", contra=" + contra + ", diferencia=" + diferencia + ", puntos=" + puntos;
+        return nombre + "," + jugados + "," + ganados + "," + empatados + "," + perdidos + "," + favor + "," + contra + "," + diferencia + "," + puntos + ",";
     }
     
 }

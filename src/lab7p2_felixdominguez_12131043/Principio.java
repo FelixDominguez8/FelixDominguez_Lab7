@@ -5,6 +5,10 @@
  */
 package lab7p2_felixdominguez_12131043;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -15,8 +19,9 @@ import java.util.Random;
  * @author Lenovo I7
  */
 public class Principio extends javax.swing.JFrame {
-    ArrayList<Equipo> equipos=new ArrayList();
+    static ArrayList<Equipo> equipos=new ArrayList();
     Random r=new Random();
+    
 
     /**
      * Creates new form Principio
@@ -24,12 +29,17 @@ public class Principio extends javax.swing.JFrame {
     public Principio() {
         initComponents();
         
+        Puntos1.setText("0");
+        Puntos1.setText("0");
+        
         DefaultComboBoxModel<String> equipobox=new DefaultComboBoxModel ();
         for(int i=0;i<equipos.size();i++){
             equipobox.addElement(equipos.get(i).getNombre());
         }
         Equipo1.setModel(equipobox);
         Equipo2.setModel(equipobox);
+        //Equipo1.setSelectedItem(0);
+        //Equipo2.setSelectedItem(0);
         
     }
 
@@ -196,7 +206,25 @@ public class Principio extends javax.swing.JFrame {
     private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
         // TODO add your handling code here:
         String nombre=(JOptionPane.showInputDialog("Ingrese el nombre del equipo"));
-        equipos.add(new Equipo(nombre));
+        Equipo equi= new Equipo(nombre);
+        equipos.add(equi);
+        File archivo=null;
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        try{
+            archivo=new File("./Equipos.txt");
+            fw=new FileWriter(archivo,true);
+            bw=new BufferedWriter(fw);
+            bw.write(equi.getNombre()+",");
+            bw.newLine();
+            bw.flush();
+            bw.close();
+            fw.close();
+        }
+        catch(Exception e){
+            System.out.println("Ha ocurrido un error fatal");
+        }
+        
     }//GEN-LAST:event_CrearActionPerformed
 
     private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
@@ -215,6 +243,8 @@ public class Principio extends javax.swing.JFrame {
         // TODO add your handling code here:
         Simular.setVisible(rootPaneCheckingEnabled);
         Simular.pack();
+        SimularPartido(equipos.get(Equipo1.getSelectedIndex()),equipos.get(Equipo2.getSelectedIndex()));
+        
     }//GEN-LAST:event_SimulacionActionPerformed
 
     private void TablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TablaActionPerformed
@@ -242,12 +272,42 @@ public class Principio extends javax.swing.JFrame {
              e1.setEmpatados(e1.getEmpatados()+1);
              e2.setEmpatados(e2.getEmpatados()+1);
          }
-         
+         e1.setDiferencia(e1.getDiferencia()+(gol1-gol2));
+         e2.setDiferencia(e2.getDiferencia()+(gol2-gol1));
+         String p1=String.valueOf(gol1);
+         String p2=String.valueOf(gol2);
+         Puntos1.setText(p1);
+         Puntos2.setText(p2);
+    }
+    
+    public void archivos() throws IOException{
+        File archivo=null;
+        FileWriter fw=null;
+        BufferedWriter bw=null;
+        for(int i=0;i<equipos.size();i++){
+            try{
+                archivo=new File("./Equipos.txt");
+                fw=new FileWriter(archivo,true);
+                bw=new BufferedWriter(fw);
+                bw.write(equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+","+equipos.get(i).getNombre()+",");
+                bw.newLine();
+                bw.flush();
+
+            }
+            catch(Exception e){
+                System.out.println("Ha ocurrido un error fatal");
+            }
+            bw.close();
+            fw.close();
+        }    
     }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+        equipos.add(new Equipo("Hola"));
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -270,6 +330,8 @@ public class Principio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
