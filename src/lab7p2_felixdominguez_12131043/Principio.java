@@ -5,11 +5,15 @@
  */
 package lab7p2_felixdominguez_12131043;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Lenovo I7
  */
 public class Principio extends javax.swing.JFrame {
+    ArrayList<Equipo> equipos=new ArrayList();
 
     /**
      * Creates new form Principio
@@ -34,33 +38,71 @@ public class Principio extends javax.swing.JFrame {
         Modificar = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         Eliminar = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        Cargar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         Simulacion = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         Tabla = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("CRUD");
+        jMenu1.setText("Equipos");
 
         Crear.setText("Crear");
+        Crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearActionPerformed(evt);
+            }
+        });
         jMenu1.add(Crear);
         jMenu1.add(jSeparator1);
 
         Modificar.setText("Modificar");
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarActionPerformed(evt);
+            }
+        });
         jMenu1.add(Modificar);
         jMenu1.add(jSeparator2);
 
         Eliminar.setText("Eliminar");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarActionPerformed(evt);
+            }
+        });
         jMenu1.add(Eliminar);
+        jMenu1.add(jSeparator3);
+
+        Cargar.setText("Cargar");
+        Cargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CargarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Cargar);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Simulacion");
+        jMenu2.setText("Partidos");
 
         Simulacion.setText("Simulacion");
+        Simulacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimulacionActionPerformed(evt);
+            }
+        });
         jMenu2.add(Simulacion);
+        jMenu2.add(jSeparator4);
 
         Tabla.setText("Tabla");
+        Tabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TablaActionPerformed(evt);
+            }
+        });
         jMenu2.add(Tabla);
 
         jMenuBar1.add(jMenu2);
@@ -80,6 +122,32 @@ public class Principio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
+        // TODO add your handling code here:
+        String nombre=(JOptionPane.showInputDialog("Ingrese el nombre del equipo"));
+        equipos.add(new Equipo(nombre));
+    }//GEN-LAST:event_CrearActionPerformed
+
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ModificarActionPerformed
+
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EliminarActionPerformed
+
+    private void CargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CargarActionPerformed
+
+    private void SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SimulacionActionPerformed
+
+    private void TablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TablaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TablaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,6 +185,7 @@ public class Principio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Cargar;
     private javax.swing.JMenuItem Crear;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Modificar;
@@ -127,5 +196,7 @@ public class Principio extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     // End of variables declaration//GEN-END:variables
 }
