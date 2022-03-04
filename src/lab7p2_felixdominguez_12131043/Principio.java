@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,21 +31,6 @@ public class Principio extends javax.swing.JFrame {
      */
     public Principio() {
         initComponents();
-        
-        Puntos1.setText("0");
-        Puntos1.setText("0");
-        
-        DefaultComboBoxModel<String> equipobox=new DefaultComboBoxModel ();
-        for(int i=0;i<equipos.size();i++){
-            equipobox.addElement(equipos.get(i).getNombre());
-        }
-        Equipo1.setModel(equipobox);
-        
-        DefaultComboBoxModel<String> equipobox2=new DefaultComboBoxModel ();
-        for(int i=0;i<equipos.size();i++){
-            equipobox2.addElement(equipos.get(i).getNombre());
-        }
-        Equipo2.setModel(equipobox2);
         
     }
 
@@ -63,6 +49,9 @@ public class Principio extends javax.swing.JFrame {
         Puntos1 = new javax.swing.JLabel();
         Puntos2 = new javax.swing.JLabel();
         BotonSimular = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Posiciones = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Crear = new javax.swing.JMenuItem();
@@ -133,6 +122,41 @@ public class Principio extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addComponent(BotonSimular)
                 .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        Posiciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Equipo", "PJ", "PG", "PE", "PP", "GF", "GC", "DG", "Puntos"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(Posiciones);
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -240,12 +264,39 @@ public class Principio extends javax.swing.JFrame {
 
     private void SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulacionActionPerformed
         // TODO add your handling code here:
+        DefaultComboBoxModel<String> equipobox=new DefaultComboBoxModel ();
+        for(int i=0;i<equipos.size();i++){
+            equipobox.addElement(equipos.get(i).getNombre());
+        }
+        Equipo1.setModel(equipobox);
+        
+        DefaultComboBoxModel<String> equipobox2=new DefaultComboBoxModel ();
+        for(int i=0;i<equipos.size();i++){
+            equipobox2.addElement(equipos.get(i).getNombre());
+        }
+        Equipo2.setModel(equipobox2);
         Simular.setVisible(rootPaneCheckingEnabled);
         Simular.pack();
     }//GEN-LAST:event_SimulacionActionPerformed
 
     private void TablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TablaActionPerformed
         // TODO add your handling code here:
+        for(int i=0;i<equipos.size();i++){
+            Object[] fila={
+                equipos.get(i).getNombre(),
+                equipos.get(i).getJugados(),
+                equipos.get(i).getGanados(),
+                equipos.get(i).getEmpatados(),
+                equipos.get(i).getPerdidos(),
+                equipos.get(i).getFavor(),
+                equipos.get(i).getContra(),
+                equipos.get(i).getDiferencia(),
+                equipos.get(i).getPuntos(),
+            };
+            DefaultTableModel model = (DefaultTableModel) Posiciones.getModel();
+            model.addRow(fila);
+            Posiciones.setModel(model);
+        }    
     }//GEN-LAST:event_TablaActionPerformed
 
     private void BotonSimularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSimularActionPerformed
@@ -365,14 +416,17 @@ public class Principio extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Equipo1;
     private javax.swing.JComboBox<String> Equipo2;
     private javax.swing.JMenuItem Modificar;
+    private javax.swing.JTable Posiciones;
     private javax.swing.JLabel Puntos1;
     private javax.swing.JLabel Puntos2;
     private javax.swing.JMenuItem Simulacion;
     private javax.swing.JDialog Simular;
     private javax.swing.JMenuItem Tabla;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
